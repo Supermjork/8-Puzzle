@@ -55,6 +55,19 @@ class Puzzle:
 
         return self
     
+    def validate_seq(self):
+        sequence = [*range(len(self.state) ** 2)]
+
+        for i in range(len(self.state)):
+            for j in range(len(self.state[i])):
+                if self.state[i][j] in sequence:
+                    sequence.remove(self.state[i][j])
+        
+        if len(sequence) == 0:
+            return True
+        else:
+            return False
+    
     def __str__(self):
         return str('\n'.join([', '.join([str(cell) for cell in row]) for row in self.state]))
 
@@ -67,6 +80,7 @@ class Puzzle:
 test_puzzle = Puzzle([[1, 2, 3], [0, 7, 5], [8, 6, 4]])
 
 print(f"Moves Done: {test_puzzle.moves}")
+print(f"Validity of Sequence: {test_puzzle.validate_seq()}")
 print(test_puzzle.where_blank())
 print(test_puzzle.legal_moves())
 print(test_puzzle.move('Down'))
