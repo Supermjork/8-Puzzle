@@ -8,6 +8,7 @@
 class Puzzle:
     goal = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
     state = []
+    moves = 0
 
     def __init__(self, state: list[list[int]]):
         self.state = state
@@ -49,6 +50,8 @@ class Puzzle:
         else:
             print("Outta luck buckaroo")
 
+        self.moves += 1
+
         return self
     
     def __str__(self):
@@ -62,6 +65,8 @@ class Puzzle:
 
 test_puzzle = Puzzle([[1, 2, 3], [0, 7, 5], [8, 6, 4]])
 
+print(f"Moves Done: {test_puzzle.moves}")
 print(test_puzzle.where_blank())
 print(test_puzzle.legal_moves())
 print(test_puzzle.move('Down'))
+print(f"Moves Done: {test_puzzle.moves}")
