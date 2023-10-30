@@ -34,6 +34,25 @@ class Puzzle:
             legal.remove('Right')
 
         return legal
+    
+    def move(self, move: str):
+        blank_Y, blank_X = self.where_blank()[0]
+
+        if move == 'Up':
+            self.state[blank_Y][blank_X], self.state[blank_Y - 1][blank_X] = self.state[blank_Y - 1][blank_X], 0
+        elif move == 'Down':
+            self.state[blank_Y][blank_X], self.state[blank_Y + 1][blank_X] = self.state[blank_Y + 1][blank_X], 0
+        elif move == 'Left':
+            self.state[blank_Y][blank_X], self.state[blank_Y][blank_X - 1] = self.state[blank_Y][blank_X - 1], 0
+        elif move == 'Right':
+            self.state[blank_Y][blank_X], self.state[blank_Y][blank_X + 1] = self.state[blank_Y][blank_X + 1], 0
+        else:
+            print("Outta luck buckaroo")
+
+        return self
+    
+    def __str__(self):
+        return str('\n'.join([', '.join([str(cell) for cell in row]) for row in self.state]))
 
 
 # Init a test layout
@@ -45,3 +64,4 @@ test_puzzle = Puzzle([[1, 2, 3], [0, 7, 5], [8, 6, 4]])
 
 print(test_puzzle.where_blank())
 print(test_puzzle.legal_moves())
+print(test_puzzle.move('Down'))
