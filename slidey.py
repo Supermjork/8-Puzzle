@@ -77,6 +77,9 @@ class Puzzle:
         
     def create_child(self):
         return deepcopy(self)
+    
+    def __iter__(self):
+        return iter(self.state)
         
     def prev(self):
         for s in self.prev_states:

@@ -1,25 +1,42 @@
 from slidey import Puzzle
+from typing import Optional, Tuple
+from collections import deque
 
 # Implementing the 2 searching algorithms of choice
 # BFS
-def bfs(states: list[Puzzle]):
-    generated_states = []
+def bfs(start: Puzzle) -> Optional[Tuple[Puzzle, list[str]]]:
+    queue = deque([(start, [])])
+    visited = set([str(start)])
 
-    for state in states:
-        moves = state.legal_moves()
+    while queue:
+        current_puzzle, path = queue.popleft()
 
-        for move in moves:
-            generated_states.append(state.create_child().move(move))
+        if current_puzzle.state == current_puzzle.goal:
+            return current_puzzle, path
 
-    for state in generated_states:
-        if state.state == state.goal:
-            return state
-        
-    bfs(generated_states)
-    pass
+        legal_moves = current_puzzle.legal_moves()
+        for move in legal_moves:
+            child_puzzle = current_puzzle.create_child()
+            child_puzzle.move(move)
+
+            if str(child_puzzle) not in visited:
+                queue.append((child_puzzle, path + [move]))
+                visited.add(str(child_puzzle))
+
+    return None
 
 # DFS
 
-init_puzzle = [Puzzle([[1, 2, 3], [4, 0, 5], [7, 8, 6]])]
+init_puzzle = Puzzle([[1, 2, 3],
+                      [4, 8, 5],
+                      [7, 6, 0]])
 
-print(bfs(init_puzzle))
+solution = bfs(init_puzzle)
+
+if solution:
+    solved_puzzle, moves = solution
+    print("Solution found!")
+    for move in moves:
+        print(move)
+else:
+    print("No solution found.")
