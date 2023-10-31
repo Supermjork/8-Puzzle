@@ -13,12 +13,8 @@ class Puzzle:
     prev_states = []
     moves = 0
 
-    def __init__(self, state: list, goal: list[list[int]] = [[0, 1, 2], [3, 4, 5], [6, 7, 8]],
-                 prev_states: list = [], moves: int = 0):
+    def __init__(self, state: list[list[int]]):
         self.state = state
-        self.goal = goal
-        self.prev_states = prev_states
-        self.moves = moves
 
     def where_blank(self):
         return [(i, j) for i in range(len(self.state)) for j in range(len(self.state[i])) if self.state[i][j] == 0]
@@ -64,6 +60,9 @@ class Puzzle:
         return self
     
     def validate_seq(self):
+        """
+        Assuming the start is always 0
+        """
         sequence = [*range(len(self.state) ** 2)]
 
         for i in range(len(self.state)):
@@ -76,17 +75,15 @@ class Puzzle:
         else:
             return False
         
-    def print_prev(self):
+    def create_child(self):
+        return deepcopy(self)
+        
+    def prev(self):
         for state in self.prev_states:
-            print(state)
+            print(f"State: \n{state}\n")
     
     def __str__(self):
         return str('\n'.join([', '.join([str(cell) for cell in row]) for row in self.state]))
-
-    def create_child(self):
-            child = deepcopy(self)
-            child.prev_states.append(self.state)
-            return child
 
 # Init a test layout
 # 1, 2, 3
@@ -105,15 +102,25 @@ print(f"Moves Done: {test_puzzle.moves}")
 print("-------------------------------")
 
 print("Child Creation")
-child = test_puzzle.create_child()
+child = deepcopy(test_puzzle)
 
 print(f"Child Move Count: {child.moves}")
-print(f"Making child move Right:\n{child.move('Right')}")
+
+print(f"Moving Child to Right: \n{child.move('Right')}")
+
 print(f"Child Move Count After move: {child.moves}")
 print(f"Parent Move Count: {test_puzzle.moves}")
 
-print(f"Comparing Child to Parent's state:\n{child.state}\n\n{test_puzzle.state}\n")
+print(f"Comparing Child to Parent's state:\n{child}\n\n{test_puzzle}\n")
 
-print(f"Child Previous States: \n{child.print_prev()}\n")
+#print(f"Child Previous States: \n{child.prev()}")
 
-print(f"Parent Previous States: \n{test_puzzle.print_prev()}")
+# Creating a third child
+child2 = child.create_child()
+
+# Moving
+child2.move("Up")
+
+# Checking previous states
+child2.prev()
+print(child2)
