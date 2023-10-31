@@ -8,7 +8,9 @@ from copy import deepcopy
 # 6 7 8
 
 class Puzzle:
-    goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+    goal = [[0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8]]
     state = []
     prev_states = []
     moves = 0
