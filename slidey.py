@@ -40,9 +40,9 @@ class Puzzle:
         return legal
     
     def move(self, move: str):
-        blank_Y, blank_X = self.where_blank()[0]
-
         self.prev_states.append(self.state)
+
+        blank_Y, blank_X = self.where_blank()[0]
 
         if move == 'Up':
             self.state[blank_Y][blank_X], self.state[blank_Y - 1][blank_X] = self.state[blank_Y - 1][blank_X], 0
@@ -79,8 +79,8 @@ class Puzzle:
         return deepcopy(self)
         
     def prev(self):
-        for state in self.prev_states:
-            print(f"State: \n{state}\n")
+        for s in self.prev_states:
+            print(f"State:\n{s}\n")
     
     def __str__(self):
         return str('\n'.join([', '.join([str(cell) for cell in row]) for row in self.state]))
@@ -113,7 +113,8 @@ print(f"Parent Move Count: {test_puzzle.moves}")
 
 print(f"Comparing Child to Parent's state:\n{child}\n\n{test_puzzle}\n")
 
-#print(f"Child Previous States: \n{child.prev()}")
+print("Child Previous States:")
+child.prev()
 
 # Creating a third child
 child2 = child.create_child()
@@ -122,5 +123,6 @@ child2 = child.create_child()
 child2.move("Up")
 
 # Checking previous states
+print("Child2 previous states:")
 child2.prev()
 print(child2)
