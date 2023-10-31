@@ -1,14 +1,14 @@
-# File containing Puzzle class
+# Importing copy module
+from copy import deepcopy
 
+# File containing Puzzle class
 # Goal:
 # 0 1 2
 # 3 4 5
 # 6 7 8
 
-from copy import deepcopy
-
 class Puzzle:
-    goal = [[0, 1, 2], [3, 4, 5], [6, 7, 8]]
+    goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
     state = []
     prev_states = []
     moves = 0
@@ -27,14 +27,14 @@ class Puzzle:
         if blank_Y == 0:
             # Can go: Left, Down, Right
             legal.remove('Up')
-        elif blank_Y == len(self.state):
+        elif blank_Y == len(self.state) - 1:
             # Can go: Left, Up, Right
             legal.remove('Down')
         
         if blank_X == 0:
             # Can go: Up, Down, Right
             legal.remove('Left')
-        elif blank_X == len(self.state[0]):
+        elif blank_X == len(self.state[0]) - 1:
             legal.remove('Right')
 
         return legal
@@ -84,45 +84,3 @@ class Puzzle:
     
     def __str__(self):
         return str('\n'.join([', '.join([str(cell) for cell in row]) for row in self.state]))
-
-# Init a test layout
-# 1, 2, 3
-# 0, 7, 5
-# 8, 6, 4
-
-test_puzzle = Puzzle([[1, 2, 3], [0, 7, 5], [8, 6, 4]])
-
-print(f"Moves Done: {test_puzzle.moves}")
-print(f"Validity of Sequence: {test_puzzle.validate_seq()}")
-print(test_puzzle.where_blank())
-print(test_puzzle.legal_moves())
-print(test_puzzle.move('Down'))
-print(f"Moves Done: {test_puzzle.moves}")
-
-print("-------------------------------")
-
-print("Child Creation")
-child = deepcopy(test_puzzle)
-
-print(f"Child Move Count: {child.moves}")
-
-print(f"Moving Child to Right: \n{child.move('Right')}")
-
-print(f"Child Move Count After move: {child.moves}")
-print(f"Parent Move Count: {test_puzzle.moves}")
-
-print(f"Comparing Child to Parent's state:\n{child}\n\n{test_puzzle}\n")
-
-print("Child Previous States:")
-child.prev()
-
-# Creating a third child
-child2 = child.create_child()
-
-# Moving
-child2.move("Up")
-
-# Checking previous states
-print("Child2 previous states:")
-child2.prev()
-print(child2)
