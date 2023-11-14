@@ -47,9 +47,11 @@ def dfs(start: Puzzle) -> Optional[Tuple[Puzzle, list[str]]]:
 
     return None
 
-init_puzzle = Puzzle([[1, 4, 2],
-                      [3, 0, 5],
-                      [6, 7, 8]
+# Implement A*, Greedy, Uniform
+
+init_puzzle = Puzzle([[1, 2, 3],
+                      [4, 0, 5],
+                      [7, 8, 6]
                     ])
 
 solution_bfs = bfs(init_puzzle)
