@@ -58,7 +58,7 @@ solution_bfs = bfs(init_puzzle)
 
 if solution_bfs:
     solved_puzzle, moves = solution_bfs
-    print("Solution found! Takes {} moves.".format(solved_puzzle.moves))
+    print("Solution found! Takes {} moves using BFS.".format(solved_puzzle.moves))
     for move in moves:
         print(move)
 else:
@@ -68,7 +68,7 @@ solution_dfs = dfs(init_puzzle)
 
 if solution_dfs:
     solved_puzzle, moves = solution_dfs
-    print("Solution found! Takes {} moves.".format(solved_puzzle.moves))
+    print("Solution found! Takes {} moves using DFS.".format(solved_puzzle.moves))
     for move in moves:
         print(move)
 else:
